@@ -2,7 +2,7 @@
 //import * as WindowsAzure from 'azure-mobile-apps-client';
 
 var WindowsAzure = require('azure-mobile-apps-client');     
-var client = new WindowsAzure.MobileServiceClient("https://mynewventure.azurewebsites.net");
+var client = new WindowsAzure.MobileServiceClient("http://myventure-table.azurewebsites.net");
 
 function addInput(divName){
   var newdiv = document.createElement('div');
@@ -19,7 +19,7 @@ function findLocation() {
 
 
    var item = { test: 'Item 1', complete: false };
-    client.getTable('allInfo').insert(item);
+    client.getTable('myInfo').insert(item);
 
 }
 
