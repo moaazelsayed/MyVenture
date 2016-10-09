@@ -12,10 +12,13 @@ content=null),Validate.isString(method,"method"),Validate.notNullOrEmpty(method,
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(require,module,exports){
 
-//import * as WindowsAzure from 'azure-mobile-apps-client';
-
 var WindowsAzure = require('azure-mobile-apps-client');     
 var client = new WindowsAzure.MobileServiceClient("http://myventure-table.azurewebsites.net");
+var currlocation = '';
+var timeRange = '';
+var currActivities = '';
+var currPriceRange = '';
+var currRating = 0;
 
 window.addInput = function (divName){
   var newdiv = document.createElement('div');
@@ -23,20 +26,54 @@ window.addInput = function (divName){
   newdiv.innerHTML = divName;
   document.getElementById('price-button').removeChild(document.getElementById('new-button'));
   document.getElementById('price-button').appendChild(newdiv);
+  currActivities = divName;
 }
 
-$('#findButton').click(function(){
-    findLocation();
+window.addInput2 = function (divName){
+  var newdiv = document.createElement('div');
+  newdiv.id = ("new-button2");
+  newdiv.innerHTML = divName;
+  document.getElementById('price-button2').removeChild(document.getElementById('new-button2'));
+  document.getElementById('price-button2').appendChild(newdiv);
+  currPriceRange = divName;
+}
+
+$(
+  function(){
+
+  $('#findButton').click(function(){
+
+      findLocation();
+  });
+
+  function findLocation() {
+    currlocation = document.getElementById('point0').value;
+    currPriceRange = document.getElementById('point1').value;
+     var item = { 
+      Location: currlocation,
+      Time: timeRange,
+      Activities: currActivities,
+      PriceRange: currPriceRange
+    };
+      client.getTable('myInfo').insert(item);
+  }
+
+  var hidden = true;
+  $('#rateE').click(function(){
+    addRating();
+  });
+  
+  function addRating(){
+
+    hidden = !hidden;
+    if(hidden) {
+        document.getElementById('camera').style.display = 'none';
+        document.getElementById('frame').style.display = 'none';
+    } else {
+        document.getElementById('camera').style.display = 'block';
+        document.getElementById('frame').style.display = 'block';
+    }
+  }
 });
-    
-function findLocation() {
-
-   var item = { test: 'Item 1', complete: false };
-    client.getTable('myInfo').insert(item);
-}
-
-module.exports = addInput;
-
-//$(document).ready(addInput);
 
 },{"azure-mobile-apps-client":1}]},{},[2]);

@@ -27,21 +27,29 @@
         <div class="text-center" id="searchBoxes">
             <h4><strong>Enter your Destination</strong></h4>
             <form method="POST">
-               <div id="dynamicIO">
+              <div id="dynamicIO">
                     <input id="point0" class="controls" type="text" placeholder="Enter a location" >
                     <input id="point1" class="controls" type="text" placeholder="Time in Hours" >
               </div>
               <br>
 
-              <div class="radio">
-                <label class="radio-inline"><input type="radio" name="optradio">All Attractions</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Main Attractions</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Hidden Gems</label>
-              </div>
-
               <label for="comment">
                 <div class="dropdown">
-                  <button id="price-button" class="btn dropdown-toggle" type="button" data-toggle="dropdown"><div id="new-button">Price Range</div>
+                  Attractions: 
+                  <button id="price-button2" class="btn dropdown-toggle" type="button" data-toggle="dropdown"><div id="new-button2">All</div>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" onClick="addInput2('All');">All</a></li>
+                    <li><a href="#" onClick="addInput2('Main Attractions');">Main Attractions</a></li>
+                    <li><a href="#" onClick="addInput2('Hidden Gems');">Hidden Gems</a></li>
+                  </ul>
+                </div>
+              </label>
+              <br>
+              <label for="comment">
+                <div class="dropdown">
+                  Price Range: 
+                  <button id="price-button" class="btn dropdown-toggle" type="button" data-toggle="dropdown"><div id="new-button">Under $25</div>
                   </button>
                   <ul class="dropdown-menu">
                     <li><a href="#" onClick="addInput('Under $25');">Under $25</a></li>
@@ -51,10 +59,33 @@
                   </ul>
                 </div>
               </label>
-
-              <button class="btn btn-primary" type="button" id="findButton">Find Activities</button>
               <br>
-              <button class="btn btn-primary" type="button" id="myFileInput" type="file" accept="image/*;capture=camera">Rate your experience with a picture!</button>
+              <button class="btn btn-primary" type="button" id="findButton">Find Activities</button>
+              <button class="btn btn-primary" type="button" id="rateE">Rate Experience!</button>
+
+              <div class="row">
+                <label>
+                  <div class="col-sm-8 col-md-7">
+                    <input id="camera" class="controls" type="file" accept="image/*" capture="camera" style="display: none;" >
+                  </div>
+                </label>
+              </div>
+              
+              <div>
+                <img id="frame">
+              </div>
+
+              <script>
+                var camera = document.getElementById('camera');
+                var frame = document.getElementById('frame');
+
+                camera.addEventListener('onClick', function(e) {
+                  var file = e.target.files[0]; 
+                  // Do something with the audio file.
+                  frame.src = URL.createObjectURL(file);
+                });
+              </script>
+
             </form>
           <br>
           
