@@ -1,6 +1,4 @@
 
-//import * as WindowsAzure from 'azure-mobile-apps-client';
-
 var WindowsAzure = require('azure-mobile-apps-client');     
 var client = new WindowsAzure.MobileServiceClient("http://myventure-table.azurewebsites.net");
 
@@ -22,6 +20,10 @@ function findLocation() {
     client.getTable('myInfo').insert(item);
 }
 
-//module.exports = addInput;
+var myInput = document.getElementById('myFileInput');
 
-//$(document).ready(addInput);
+$('#myFileInput').click(function(){
+	var file = document.getElementById('myFileInput').files[0];
+	
+});
+
