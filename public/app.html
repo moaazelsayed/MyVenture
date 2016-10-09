@@ -118,20 +118,22 @@
               //data: {"url": "http://www.moaaze.com/images/avatar.JPG" },
           })
           .done(function(data) {
-              if (data[0].scores.surprise >= 0.7){
+              if (data[0].scores.surprise >= 0.5){
                 alert("You rated a 5/5  Stars!");
               }
-              if (data[0].scores.happiness >= 0.7){
+              if (data[0].scores.happiness >= 0.5){
                 alert("You rated a 4.5/5  Stars!");
               }
-              if (data[0].scores.neutral >= 0.7){
+              if (data[0].scores.neutral >= 0.5){
                 alert("You rated a 3/5 Stars!");
               }
-              if (data[0].scores.sadness >= 0.7){
+              if (data[0].scores.sadness >= 0.5){
                 alert("You rated a 2.5/5 Stars!");
               }
-              if (data[0].scores.anger >= 0.7){
+              if (data[0].scores.anger >= 0.5){
                 alert("You rated a 1/5 Star!");
+              }else{
+                alert("You rated a 3.5/5 Star!");
               }
           })
           .fail(function() {
