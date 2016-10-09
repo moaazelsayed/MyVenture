@@ -61,8 +61,14 @@
               <br>
               <button class="btn btn-primary" type="button" id="findButton">Find Activities</button>
               <button class="btn btn-primary" type="button" id="rateE">Rate Experience!</button>
+
               <div id="amount-in-location">
+                <label id="new-label-amount"></label>
               </div>
+              <br>
+              <div id="lets-go">
+              </div>
+
               <div class="row">
                 <label>
                   <div class="col-sm-8 col-md-7">
@@ -78,7 +84,6 @@
               </div>
 
             </form>
-          <br>
           
       </div>
   </div>
@@ -95,26 +100,39 @@
         // Do something with the file.
         var fileURL = URL.createObjectURL(file);
         frame.src = fileURL;
-        console.log(fileURL);
+        //console.log(fileURL);
           $(function() {
-          var params = {
-            // Request parameters
-          };
+
           $.ajax({
-              url: "https://api.projectoxford.ai/emotion/v1.0/recognize" + $.param(params),
+              url: "https://api.projectoxford.ai/emotion/v1.0/recognize",
               beforeSend: function(xhrObj){
-                  // Request headers
-                  xhrObj.setRequestHeader('Access-Control-Allow-Origin', '*');
-                  xhrObj.setRequestHeader("Content-Type","application/json");
-                  xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","{47c0799dfecf4d95a36f667cba225239}");
+                // Request headers
+                //xhrObj.setRequestHeader('Access-Control-Allow-Origin', '*');
+                xhrObj.setRequestHeader("Content-Type","application/octet-stream");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","daea74e6fa7a4b6e98ffff7996d26e73");
               },
               type: "POST",
               // Request body
-              data: {"url": fileURL },
+              data: file,
+              processData: false
+              //data: {"url": "http://www.moaaze.com/images/avatar.JPG" },
           })
           .done(function(data) {
-              console.log("Success");
-              console.log(data);
+              if (data[0].scores.surprise >= 0.7){
+                alert("You rated a 5/5  Stars!");
+              }
+              if (data[0].scores.happiness >= 0.7){
+                alert("You rated a 4.5/5  Stars!");
+              }
+              if (data[0].scores.neutral >= 0.7){
+                alert("You rated a 3/5 Stars!");
+              }
+              if (data[0].scores.sadness >= 0.7){
+                alert("You rated a 2.5/5 Stars!");
+              }
+              if (data[0].scores.anger >= 0.7){
+                alert("You rated a 1/5 Star!");
+              }
           })
           .fail(function() {
               console.log("Error");

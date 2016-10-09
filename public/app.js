@@ -83,7 +83,8 @@ window.initMap = function() {
                 anchor: new google.maps.Point(17, 34),
                 scaledSize: new google.maps.Size(35, 35)
             }));
-
+            var bounds = new google.maps.LatLng(locationArray[0][0], locationArray[0][1]);
+            map.setCenter(bounds);
             // marker.setPosition(place.geometry.location);         // fix this shit
            // marker.setVisible(true);
 
@@ -117,7 +118,7 @@ $(
     map.setCenter(bounds);
     //map.panTo(markerArr[0].position);
     map.setZoom(13);
-    $('#searchBoxes').append("<a href=\"http://maps.google.com/maps?q="+lat+","+lng+"&ll="+lat+0.1+","+lng+0.1+"&z=17\"+ target=\"_blank\"><button class=\"btn btn-success directionButton\" type=\"button\">Directions</button></a>")
+    $('#lets-go').append("<a href=\"http://maps.google.com/maps?q="+lat+","+lng+"&ll="+lat+0.1+","+lng+0.1+"&z=17\"+ target=\"_blank\"><button class=\"btn btn-success directionButton\" type=\"button\">Directions</button></a>")
     
     currlocation = document.getElementById('point0').value;
     currPriceRange = document.getElementById('point1').value;
@@ -128,13 +129,26 @@ $(
       PriceRange: currPriceRange
     };
     client.getTable('myInfo').insert(item);
-    
+
+    var count = 0;
+    var table = client.getTable('myInfo');
+    var allLocations = table.read().then(success);
+
+    function success (result){
+    for (var i = 0 ; i < results.length ; i++) {
+      var pulledLoc = result[i];
+      if (pulledLoc == currlocation){
+          count++
+        }
+      }
+    }
+
     var count = 0;
     var newdiv1 = document.createElement('label');
     newdiv1.id = ("new-label-amount");
-    newdiv1.innerHTML = count + " people reviewed this location.";
+    newdiv1.innerHTML = count + " people have reviews around this location.";
     document.getElementById('amount-in-location').removeChild(document.getElementById('new-label-amount'));
-    document.getElementById('amount-in-location').appendChild(newdiv);
+    document.getElementById('amount-in-location').appendChild(newdiv1);
   }
 
   var hidden = true;
