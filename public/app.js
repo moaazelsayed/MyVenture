@@ -8,6 +8,8 @@ var currPriceRange = '';
 var currRating = 0;
 var map;
 var locationArray = [];
+var markerArr = [];
+
 window.addInput = function (divName){
   var newdiv = document.createElement('div');
   newdiv.id = ("new-button");
@@ -65,7 +67,6 @@ window.initMap = function() {
     });
 
     function paint(place, locationArray){
-      var markerArr = [];
         for (i = 0; i < locationArray.length; i++){
 
             var marker = new google.maps.Marker({
@@ -114,6 +115,8 @@ $(
     var lng = locationArray[0][1];
     var bounds = new google.maps.LatLng(lat,lng);
     map.setCenter(bounds);
+    //map.panTo(markerArr[0].position);
+    map.setZoom(13);
     $('#searchBoxes').append("<a href=\"http://maps.google.com/maps?q="+lat+","+lng+"&ll="+lat+0.1+","+lng+0.1+"&z=17\"+ target=\"_blank\"><button class=\"btn btn-success directionButton\" type=\"button\">Directions</button></a>")
     
     currlocation = document.getElementById('point0').value;
@@ -124,7 +127,14 @@ $(
       Activities: currActivities,
       PriceRange: currPriceRange
     };
-      client.getTable('myInfo').insert(item);
+    client.getTable('myInfo').insert(item);
+    
+    var count = 0;
+    var newdiv1 = document.createElement('label');
+    newdiv1.id = ("new-label-amount");
+    newdiv1.innerHTML = count + " people reviewed this location.";
+    document.getElementById('amount-in-location').removeChild(document.getElementById('new-label-amount'));
+    document.getElementById('amount-in-location').appendChild(newdiv);
   }
 
   var hidden = true;
